@@ -8,7 +8,7 @@ error Deed__NotLawyer();
 contract Deed {
     address public owner; // owner of deed
     address public lawyer; // address of lawyer
-    address private james; // address of inheritor
+    address payable private james; // address of inheritor
     uint public shares; // shares of inheritor
     uint public timeSpan;
 
