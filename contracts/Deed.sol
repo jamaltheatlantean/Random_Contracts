@@ -36,6 +36,7 @@ contract Deed {
     }
 
     function transfer() public onlyLawyer {
-
+        require(block.timestamp >= timeSpan, "warning: too early");
+        james.transfer(address(this).balance);
     }
 }
