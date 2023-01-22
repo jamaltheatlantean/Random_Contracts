@@ -22,6 +22,11 @@ contract DAO {
         bool executed;
     }
 
+    mapping(address => bool) public investors; // keep track of investors
+    mapping(address => uint) public shares; // keep track of shares
+    mapping(address => mapping(uint => bool)) public votes; // keep track of individual votes
+    mapping(uint => Proposal) public proposals; // maps proposals
+
 
     constructor() {
         
