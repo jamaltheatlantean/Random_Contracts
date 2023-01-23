@@ -35,7 +35,14 @@ contract DAO {
     address public admin;
 
 
-    constructor() {
+    constructor(
+        uint contributionTime,
+        uint _voteTime,
+        uint _minVotes) {
+        require(_minVotes > 0 && minVotes < 200, "minVotes should be between 0 and 200");
+        contributionEnd = block.timestamp + contributionTime;
+        voteTime = _voteTime;
+        minVotes = _minVotes;
         admin = msg.sender;
     }
 
