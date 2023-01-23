@@ -34,6 +34,11 @@ contract DAO {
     uint public minVotes; // minimal number of votes required
     address public admin;
 
+    modifier onlyInvestors {
+        require(investors[msg.sender] = true, "error: Not investor");
+        _;
+    }
+
 
     constructor(
         uint contributionTime,
@@ -49,8 +54,13 @@ contract DAO {
     function contribute() payable external {
         require(block.timestamp < contributionEnd, "error: contribution over");
         investors[msg.sender] = true; // make contributor an investor
-        shares[msg.sender] += msg.value;
-        totalShares += msg.value; // total shares = how muuch contributed so far
+        shares[msg.sender] += msg.value; // increase shares of investor
+        totalShares += msg.value; // increase totalShares
+        availableFunds += msg.value; // increase available funds
+    }
+
+    function redeemShare(uint amount) external onlyInvestors {
+
     }
 
 
