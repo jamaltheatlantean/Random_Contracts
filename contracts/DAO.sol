@@ -26,10 +26,17 @@ contract DAO {
     mapping(address => uint) public shares; // keep track of shares
     mapping(address => mapping(uint => bool)) public votes; // keep track of individual votes
     mapping(uint => Proposal) public proposals; // maps proposals
+    uint public totalShares; 
+    uint public availableFunds;
+    uint public contributionEnd;
+    uint public nextProposalId;
+    uint public voteTime; // deadline for vote to end
+    uint public minVotes; // minimal number of votes required
+    address public admin;
 
 
     constructor() {
-        
+        admin = msg.sender;
     }
 
 
