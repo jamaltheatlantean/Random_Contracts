@@ -5,12 +5,17 @@ pragma solidity ^0.8.10;
 error Deed__NotOwner();
 error Deed__NotLawyer();
 
+/**
+ * DeedContract: This contract is for an inheritance deed that was
+ * tailor-made to transfer the funds to a Mr James, once the owner dies. 
+ */
+
 contract Deed {
     address public owner; // owner of deed
     address public lawyer; // address of lawyer
     address payable private james; // address of inheritor
     uint public shares; // shares of inheritor
-    uint public timeSpan;
+    uint public timeSpan; // for when withdraw can be called
 
     modifier onlyOwner {
         if(msg.sender != owner)
