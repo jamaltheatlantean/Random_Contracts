@@ -46,5 +46,12 @@ contract DAO {
         admin = msg.sender;
     }
 
+    function contribute() payable external {
+        require(block.timestamp < contributionEnd, "error: contribution over");
+        investors[msg.sender] = true; // make contributor an investor
+        shares[msg.sender] += msg.value;
+        totalShares += msg.value; // total shares = how muuch contributed so far
+    }
+
 
 }
