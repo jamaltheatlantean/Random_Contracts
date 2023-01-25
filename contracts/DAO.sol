@@ -67,5 +67,11 @@ contract DAO {
         payable(msg.sender).transfer(amount);
     }
 
+    function transferShare(uint amount, address to) external onlyInvestor {
+        require(shares[msg.sender] >= amount, "error: insufficient shares");
+        shares[msg.sender] -= amount;
+        shares[to] += amount;
+        investors[to] = true;
+    }
 
 }
