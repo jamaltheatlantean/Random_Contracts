@@ -60,7 +60,11 @@ contract DAO {
     }
 
     function redeemShare(uint amount) external onlyInvestors {
-
+        require(shares[msg.sender] >= amount, "error: not enough shares");
+        require(availableFunds >= amount, "error: not enough available funds");
+        shares[msg.sender] -= amount;
+        availableFunds -= amount;
+        payable(msg.sender).transfer(amount);
     }
 
 
