@@ -93,4 +93,12 @@ contract DAO {
         nextProposalId++;
     }
 
+    function voteOnProposal(uint proposalId) external onlyInvestors {
+        Proposal storage proposal = proposals[proposalId];
+        require(votes[msg.sender][proposalId] == false, "error: investor can only vote once");
+        require(block.timestamp < proposal.end, "error: proposal already ended");
+        votes[msg.sender] = true;
+        proposal.votes += shares[msg.sender];
+    }
+
 }
