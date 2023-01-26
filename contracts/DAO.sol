@@ -128,5 +128,10 @@ contract DAO {
         (bool success, ) = to.call{value: amount}(data);
         require(success, "error: tx failed");
     }
+    
+    // transfer using to
+    function transferEther(uint amount, address payable to) external onlyAdmin {
+        to.transfer(amount);
+    }
 
 }
