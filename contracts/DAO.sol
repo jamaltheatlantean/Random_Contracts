@@ -85,7 +85,12 @@ contract DAO {
             name,
             amount,
             receipient,
-        )
+            0,
+            block.timestamp + voteTime,
+            false
+        );
+        availableFunds -= amount;
+        nextProposalId++;
     }
 
 }
