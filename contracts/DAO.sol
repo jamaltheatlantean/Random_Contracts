@@ -18,7 +18,8 @@ contract DAO {
         uint votes;
         uint end;
         string name;
-        address payable receipient;
+        address payable recipient;
+        bytes data;
         bool executed;
     }
 
@@ -34,11 +35,15 @@ contract DAO {
     uint public minVotes; // minimal number of votes required
     address public admin;
 
-    modifier onlyInvestors {
+    modifier onlyInvestors() {
         require(investors[msg.sender] = true, "error: Not investor");
         _;
     }
 
+    modifier onlyAdmin() {
+        require(msg.sender == admin, "error: nnot admin");
+        _;
+    }
 
     constructor(
         uint contributionTime,
@@ -71,7 +76,7 @@ contract DAO {
         payable(msg.sender).transfer(amount);
     }
 
-    function transferShare(uint amount, address to) external onlyInvestor {
+    function transferShare(uint amount, address to) external onlyInvestors {
         require(shares[msg.sender] >= amount, "error: insufficient shares");
         shares[msg.sender] -= amount;
         shares[to] += amount;
@@ -81,16 +86,18 @@ contract DAO {
     function createProposal(
         string memory name,
         uint amount,
-        address payable receipient
+        address payable recipient,
+        bytes calldata data
     ) public onlyInvestors {
         require(availableFunds >= amount, "error: insufficient funds");
         proposals[nextProposalId] = Proposal(
             nextProposalId,
-            name,
             amount,
-            receipient,
             0,
             block.timestamp + voteTime,
+            name,
+            recipient,
+            data,
             false
         );
         availableFunds -= amount;
@@ -101,8 +108,18 @@ contract DAO {
         Proposal storage proposal = proposals[proposalId];
         require(votes[msg.sender][proposalId] == false, "error: investor can only vote once");
         require(block.timestamp < proposal.end, "error: proposal already ended");
-        votes[msg.sender] = true;
+        votes[msg.sender][proposalId] = true;
         proposal.votes += shares[msg.sender];
+    }
+
+    function executePropsal(uint proposalId) external onlyAdmin {
+        Proposal storage proposal = proposals[proposalId];
+        require(block.timestamp >= proposal.end, "error: cannot execute before end of proposal");
+        require(!proposal.executed, "error: proposal already executed");
+        require((proposal.votes / totalShares) * 200 >= minVotes, "error: cannot execute proposal with votes below minVotes");
+        (bool success, ) = proposal.recipient.call{value: proposal.amount}(proposal.data);
+        require(success, "error: tx failed");
+        
     }
 
 }
