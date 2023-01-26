@@ -74,4 +74,15 @@ contract DAO {
         investors[to] = true;
     }
 
+    function createProposal(
+        string memory name,
+        uint amount,
+        address payable receipient
+    ) public onlyInvestors {
+        require(availableFunds >= amount, "error: insufficient funds");
+        proposals[nextProposalId] = Proposal(
+            
+        )
+    }
+
 }
