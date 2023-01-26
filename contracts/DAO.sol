@@ -56,6 +56,7 @@ contract DAO {
         admin = msg.sender;
     }
 
+    // for eth returns of successful proposal investments
     receive() external payable {
         availableFunds += msg.value;
     }
@@ -133,5 +134,7 @@ contract DAO {
     function transferEther(uint amount, address payable to) external onlyAdmin {
         to.transfer(amount);
     }
+
+    // create getter functions
 
 }
