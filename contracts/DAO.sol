@@ -81,7 +81,10 @@ contract DAO {
     ) public onlyInvestors {
         require(availableFunds >= amount, "error: insufficient funds");
         proposals[nextProposalId] = Proposal(
-            
+            nextProposalId,
+            name,
+            amount,
+            receipient,
         )
     }
 
