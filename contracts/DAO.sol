@@ -117,9 +117,16 @@ contract DAO {
         require(block.timestamp >= proposal.end, "error: cannot execute before end of proposal");
         require(!proposal.executed, "error: proposal already executed");
         require((proposal.votes / totalShares) * 200 >= minVotes, "error: cannot execute proposal with votes below minVotes");
+        // transfer funds using call for check effects
         (bool success, ) = proposal.recipient.call{value: proposal.amount}(proposal.data);
         require(success, "error: tx failed");
-        
+    }
+
+    function transferFunds(address payable to, bytes memory data, uint amount) external onlyAdmin {
+        require(amount <= availableFunds, "error: insufficient funds");
+        availableFunds -= amount;
+        (bool success, ) = to.call{value: amount}(data);
+        require(success, "error: tx failed");
     }
 
 }
