@@ -136,5 +136,16 @@ contract DAO {
     }
 
     // create getter functions
+    function getInvestors() public view returns(bool investors) {
+        return true;
+    }
+
+    function getTotalAvailableFunds() public view returns (uint256) {
+        return address(this).balance;
+    }
+
+    function getShares(address investors) pure view returns(uint shares) {
+        return shares;
+    }
 
 }
