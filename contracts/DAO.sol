@@ -23,7 +23,7 @@ contract DAO {
         bool executed;
     }
 
-    mapping(address => bool) public investors; // keep track of investors
+    mapping(address => bool) public isInvestor; // keep track of investors
     mapping(address => uint) public shares; // keep track of shares
     mapping(address => mapping(uint => bool)) public votes; // keep track of individual votes
     mapping(uint => Proposal) public proposals; // maps proposals
@@ -34,9 +34,10 @@ contract DAO {
     uint public voteTime; // deadline for vote on proposal to end
     uint public minVotes; // minimal number of votes required
     address public admin;
+    address [] public investors;
 
     modifier onlyInvestors() {
-        require(investors[msg.sender] = true, "error: Not investor");
+        require(isInvestor[msg.sender] = true, "error: Not investor");
         _;
     }
 
@@ -61,12 +62,18 @@ contract DAO {
         availableFunds += msg.value;
     }
 
-    function contribute() payable external {
+    function contribute(address investor) payable external {
         require(block.timestamp < contributionEnd, "error: contribution over");
-        investors[msg.sender] = true; // make contributor an investor
+        investors.push(investor);
+        isInvestor[msg.sender] = true; // make contributor an investor
         shares[msg.sender] += msg.value; // increase shares of investor
         totalShares += msg.value; // increase totalShares
         availableFunds += msg.value; // increase available funds
+    }
+
+    // use function to extend contribution time
+    function extendContributionTime(uint _newContributionTime) public onlyAdmin {
+        contributionEnd = block.timestamp + _newContributionTime;
     }
 
     function redeemShare(uint amount) external onlyInvestors {
@@ -81,7 +88,7 @@ contract DAO {
         require(shares[msg.sender] >= amount, "error: insufficient shares");
         shares[msg.sender] -= amount;
         shares[to] += amount;
-        investors[to] = true;
+        isInvestor[to] = true;
     }
 
     function createProposal(
@@ -136,16 +143,16 @@ contract DAO {
     }
 
     // create getter functions
-    function getInvestors() public view returns(bool investors) {
-        return true;
+    function getInvestors() public view returns(address [] memory) {
+        return investors;
     }
 
     function getTotalAvailableFunds() public view returns (uint256) {
         return address(this).balance;
     }
 
-    function getShares(address investors) pure view returns(uint shares) {
-        return shares;
+    function getShares(address investor) public view returns(uint256) {
+        return shares[investor];
     }
 
 }
