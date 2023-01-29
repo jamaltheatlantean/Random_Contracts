@@ -15,4 +15,16 @@ event ConfirmTransaction(address indexed owner, uint indexed txIndex);
 event RevokeConfirmation(address indexed owner, uint indexed tcIndex);
 event ExecuteTransaction(address indexed owner, uint indexed txIndex);
 
+address [] public owners;
+mapping(address => bool) public isOwner; // keep track of owners
+uint public numOfConfirmationsRequired;
+
+struct Transaction {
+    address to;
+    uint value;
+    bytes data;
+    bool executed;
+    uint totalConfirmations;
+}
+
 } 
