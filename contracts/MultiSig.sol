@@ -40,4 +40,14 @@ modifier txExists(uint _txIndex) {
     _;
 }
 
+modifier notExecuted(uint _txIndex) {
+    require(!transactions[_txIndex].executed, "error: tx already executed");
+    _;
+}
+
+modifier notConfirmed(uint _txIndex) {
+    require(!isConfirmed[_txIndex][msg.sender], "error: tx already confirmed");
+    _;
+}
+
 } 
