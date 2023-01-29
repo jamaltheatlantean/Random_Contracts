@@ -29,4 +29,15 @@ struct Transaction {
 
 mapping(uint => mapping(address => bool)) public isConfirmed // mapping from txIndex => owner => bool
 
+Transaction[] public transactions;
+
+modifier onlyOwner() {
+    require(isOwner[msg.sender], "error: not owner");
+    _;
+}
+modifier txExists(uint _txIndex) {
+    require(_txIndex < transactions.length, "error: tx does not exist");
+    _;
+}
+
 } 
