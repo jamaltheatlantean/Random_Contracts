@@ -20,11 +20,13 @@ mapping(address => bool) public isOwner; // keep track of owners
 uint public numOfConfirmationsRequired;
 
 struct Transaction {
-    address to;
-    uint value;
-    bytes data;
-    bool executed;
-    uint totalConfirmations;
+    address to; // address receiving payment
+    uint value; // value of eth
+    bytes data; // data of tx
+    bool executed; // has tx been confirmed?
+    uint totalConfirmations; // total amount of votes for tx
 }
+
+mapping(uint => mapping(address => bool)) public isConfirmed // mapping from txIndex => owner => bool
 
 } 
