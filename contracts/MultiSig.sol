@@ -11,5 +11,8 @@ event SubmitTransaction(
     uint value,
     bytes data
 );
+event ConfirmTransaction(address indexed owner, uint indexed txIndex);
+event RevokeConfirmation(address indexed owner, uint indexed tcIndex);
+event ExecuteTransaction(address indexed owner, uint indexed txIndex);
 
 } 
