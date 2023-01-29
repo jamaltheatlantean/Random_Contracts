@@ -50,4 +50,16 @@ modifier notConfirmed(uint _txIndex) {
     _;
 }
 
+// hardcode owners
+constructor(address[] memory _owners, uint _numOfConfirmationsRequired) {
+    require(_owners.length > 0, "error: owners required");
+    require(
+        _numOfConfirmationsRequired > 0 && 
+        _numOfConfirmationsRequired <= _owners.length,
+        "error: invalid number of required confirmations"
+    );
+
+    for (uint i; i < _owners.length; i++)
+}
+
 } 
