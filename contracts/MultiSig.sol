@@ -59,7 +59,17 @@ constructor(address[] memory _owners, uint _numOfConfirmationsRequired) {
         "error: invalid number of required confirmations"
     );
 
-    for (uint i; i < _owners.length; i++)
+    for (uint i; i < _owners.length; i++) {
+        address owners = _owners[i];
+
+        require(owner != address(0), "error: invalid owner");
+        require(!isOwner[owner], "error: owner is not unique");
+
+        isOwner[owner] = true;
+        owners.push(owner)
+    }
+
+    numOfConfirmationsRequired = _numOfConfirmationsRequired;
 }
 
 } 
