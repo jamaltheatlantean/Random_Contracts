@@ -126,10 +126,15 @@ constructor(address[] memory _owners, uint _numOfConfirmationsRequired) {
         Transaction storage transaction = transactions[_txIndex];
 
         require(isConfirmed[_txIndex][msg.sender], "error: tx not confoirmed");
-        transaction.totalConfirmations =- 1; // cancels confirmation of user
+        transaction.totalConfirmations -= 1; // cancels confirmation of user
         isConfirmed[_txIndex][msg.sender] = false;
 
         // emit event
         emit RevokeConfirmation(msg.sender, _txIndex);
+    }
+
+    // Getter functions
+    function getOwners() public view returns(address [] memory) {
+        return owners;
     }
 }
