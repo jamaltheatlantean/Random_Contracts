@@ -149,6 +149,13 @@ constructor(address[] memory _owners, uint _numOfConfirmationsRequired) {
         uint totalConfirmations
         )
     {
-
+        Transaction storage transaction = transactions[_txIndex];
+        return (
+            transaction.to,
+            transaction.value,
+            transaction.data,
+            transaction.executed,
+            transaction.totalConfirmations
+        );
     }
 }
