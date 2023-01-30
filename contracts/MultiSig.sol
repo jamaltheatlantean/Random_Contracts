@@ -97,11 +97,16 @@ constructor(address[] memory _owners, uint _numOfConfirmationsRequired) {
         emit SubmitTransaction(msg.sender, txIndex, _to, _value, _data);
     }
 
+    // use function to confirm transaction as part of the approval system
     function confirmTx(uint _txIndex) public 
     onlyOwner 
     txExists(_txIndex)
     notExecuted(_txIndex) 
     notConfirmed(_txIndex) {
         Transaction storage transaction = transactions[_txIndex];
+        transaction.totalConfirmations += 1;
+        isConfirmed[_txIndex][msg.sender] = true;
+        // emit event
+        emit ConfirmTransaction(msg.sender, _txIndex);
     }
 }
