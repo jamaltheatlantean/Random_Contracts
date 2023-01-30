@@ -137,4 +137,18 @@ constructor(address[] memory _owners, uint _numOfConfirmationsRequired) {
     function getOwners() public view returns(address [] memory) {
         return owners;
     }
+
+    function getTx(uint _txIndex) 
+    public 
+    view 
+    returns (
+        address to, 
+        uint value, 
+        bytes memory data, 
+        bool executed, 
+        uint totalConfirmations
+        )
+    {
+
+    }
 }
