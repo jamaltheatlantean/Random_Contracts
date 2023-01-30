@@ -76,4 +76,23 @@ receive() external payable {
     emit Deposit(msg.sender, msg.value, address(this).balance);
 }
 
-} 
+function submitTransaction(
+    address _to,
+    uint _value,
+    bytes memory _data
+) public onlyOwner {
+    uint txIndex = transactions.length; // declare index of tx
+
+    transactions.push(
+        Transaction({
+            to: _to,
+            value: _value,
+            data: _data,
+            executed: false,
+         totalConfirmations: 0
+        })
+    );
+
+    // emit event
+    emit SubmitTransaction(msg.sender, txIndex, _to, _value, _data);
+}
