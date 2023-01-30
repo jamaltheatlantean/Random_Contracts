@@ -27,7 +27,7 @@ struct Transaction {
     uint totalConfirmations; // total amount of votes for tx
 }
 
-mapping(uint => mapping(address => bool)) public isConfirmed // mapping from txIndex => owner => bool
+mapping(uint => mapping(address => bool)) public isConfirmed; // mapping from txIndex => owner => bool
 
 Transaction[] public transactions;
 
@@ -60,39 +60,40 @@ constructor(address[] memory _owners, uint _numOfConfirmationsRequired) {
     );
 
     for (uint i; i < _owners.length; i++) {
-        address owners = _owners[i];
+        address owner = _owners[i];
 
         require(owner != address(0), "error: invalid owner");
         require(!isOwner[owner], "error: owner is not unique");
 
         isOwner[owner] = true;
-        owners.push(owner)
+        owners.push(owner);
     }
 
     numOfConfirmationsRequired = _numOfConfirmationsRequired;
 }
 
-receive() external payable {
-    emit Deposit(msg.sender, msg.value, address(this).balance);
-}
+    receive() external payable {
+        emit Deposit(msg.sender, msg.value, address(this).balance);
+    }
 
-function submitTransaction(
-    address _to,
-    uint _value,
-    bytes memory _data
-) public onlyOwner {
-    uint txIndex = transactions.length; // declare index of tx
+    function submitTransaction(
+        address _to,
+        uint _value,
+        bytes memory _data
+    ) public onlyOwner {
+        uint txIndex = transactions.length; // declare index of tx
 
-    transactions.push(
-        Transaction({
-            to: _to,
-            value: _value,
-            data: _data,
-            executed: false,
-         totalConfirmations: 0
-        })
-    );
+        transactions.push(
+            Transaction({
+                to: _to,
+                value: _value,
+                data: _data,
+                executed: false,
+             totalConfirmations: 0
+            })
+        );
 
-    // emit event
-    emit SubmitTransaction(msg.sender, txIndex, _to, _value, _data);
+        // emit event
+        emit SubmitTransaction(msg.sender, txIndex, _to, _value, _data);
+    }
 }
