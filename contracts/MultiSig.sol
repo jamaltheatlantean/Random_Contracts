@@ -121,4 +121,11 @@ constructor(address[] memory _owners, uint _numOfConfirmationsRequired) {
         // emit event
         emit ExecuteTransaction(msg.sender, _txIndex);
     }
+
+    function revokeTx(uint _txIndex) public onlyOwner txExists(_txIndex) notExecuted(_txIndex) {
+        Transaction storage transaction = transactions[_txIndex];
+
+        require(isConfirmed[_txIndex][msg.sender], "error: tx not confoirmed");
+
+    }
 }
