@@ -109,4 +109,16 @@ constructor(address[] memory _owners, uint _numOfConfirmationsRequired) {
         // emit event
         emit ConfirmTransaction(msg.sender, _txIndex);
     }
+    
+    function executeTx(uint _txIndex) public 
+    onlyOwner txExists(_txIndex) notExecuted(_txIndex) {
+        Transaction storage transaction = transactions[_txIndex];
+        require(transaction.totalConfirmations >= numOfConfirmationsRequired, "error: need more confirmations");
+        transaction.executed = true;
+
+        (bool success, ) = transaction.to.call{value: transaction.value}(transaction.data);
+        require(success, "error: tx failed");
+        // emit event
+        emit ExecuteTransaction(msg.sender, _txIndex);
+    }
 }
