@@ -126,6 +126,10 @@ constructor(address[] memory _owners, uint _numOfConfirmationsRequired) {
         Transaction storage transaction = transactions[_txIndex];
 
         require(isConfirmed[_txIndex][msg.sender], "error: tx not confoirmed");
+        transaction.totalConfirmations =- 1; // cancels confirmation of user
+        isConfirmed[_txIndex][msg.sender] = false;
 
+        // emit event
+        emit RevokeConfirmation(msg.sender, _txIndex);
     }
 }
