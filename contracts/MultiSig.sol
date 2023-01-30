@@ -76,7 +76,7 @@ constructor(address[] memory _owners, uint _numOfConfirmationsRequired) {
         emit Deposit(msg.sender, msg.value, address(this).balance);
     }
 
-    function submitTransaction(
+    function submitTx(
         address _to,
         uint _value,
         bytes memory _data
@@ -95,5 +95,13 @@ constructor(address[] memory _owners, uint _numOfConfirmationsRequired) {
 
         // emit event
         emit SubmitTransaction(msg.sender, txIndex, _to, _value, _data);
+    }
+
+    function confirmTx(uint _txIndex) public 
+    onlyOwner 
+    txExists(_txIndex)
+    notExecuted(_txIndex) 
+    notConfirmed(_txIndex) {
+        Transaction storage transaction = transactions[_txIndex];
     }
 }
