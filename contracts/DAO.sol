@@ -142,7 +142,7 @@ contract DAO {
         to.transfer(amount);
     }
 
-    // create getter functions
+    // Getter functions
     function getInvestors() public view returns(address [] memory) {
         return investors;
     }
