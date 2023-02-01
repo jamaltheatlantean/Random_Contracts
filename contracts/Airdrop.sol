@@ -10,4 +10,13 @@ contract Airdrop {
     IERC20 public token;
     uint public currentAirdropAmount;
     uint public maxAirdropAmount = 10000 * 10 ** 18;
+
+    // event
+    event AirDropProcessed(
+        address recipient,
+        uint amount,
+        uint date
+    );
+
+
 }
