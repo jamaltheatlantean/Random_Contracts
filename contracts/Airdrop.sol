@@ -16,7 +16,11 @@ contract Airdrop {
         address recipient,
         uint amount,
         uint date
-    );
+    ); 
+
+    constructor(address _token) {
+        
+    }
 
 
 }
