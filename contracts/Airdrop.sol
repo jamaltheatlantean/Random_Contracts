@@ -18,9 +18,18 @@ contract Airdrop {
         uint date
     ); 
 
+    modifier onlyAdmin {
+        require(msg.sender == admin, "error: not admin");
+        _;
+    }
+
     constructor(address _token) {
         token = IERC20;
         admin = msg.sender;
+    }
+
+    function updateAdmin(address newAdmin) external onlyAdmin {
+        admin = newAdmin;
     }
 
 
