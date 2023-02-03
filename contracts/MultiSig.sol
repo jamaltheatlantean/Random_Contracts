@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: SEE LICENSE IN LICENSE
-pragma solidity ^0.8.10;
+pragma solidity 0.8.10;
 
 contract MultiSig {
 
@@ -164,8 +164,7 @@ constructor(address[] memory _owners, uint _numOfConfirmationsRequired) {
  * This is a contract to test sending a transaction from the multiSig wallet
  */
 
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.17;
+pragma solidity 0.8.10;
 
 contract TestContract {
     uint public i;
