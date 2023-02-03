@@ -19,7 +19,8 @@ contract Airdrop {
     ); 
 
     constructor(address _token) {
-        
+        token = IERC20;
+        admin = msg.sender;
     }
 
 
