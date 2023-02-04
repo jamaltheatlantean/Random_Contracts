@@ -37,7 +37,10 @@ contract Airdrop {
         uint amount,
         bytes calldata signature
     ) external {
-        
+        bytes32 message = prefixed(keccak256(abi.encodePacked(
+            recipient,
+            amount
+        )));
     }
 
 
