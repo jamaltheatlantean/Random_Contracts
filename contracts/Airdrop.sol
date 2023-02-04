@@ -42,6 +42,6 @@ contract Airdrop {
             amount
         )));
     }
-
+    require(recoverSigner(message, signature) == admin, "error: wrong signature");
 
 }
