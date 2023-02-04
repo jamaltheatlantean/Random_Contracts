@@ -32,5 +32,9 @@ contract Airdrop {
         admin = newAdmin;
     }
 
+    function claimTokens(
+        address recipient,
+    )
+
 
 }
