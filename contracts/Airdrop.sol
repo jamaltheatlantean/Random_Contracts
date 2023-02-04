@@ -34,7 +34,11 @@ contract Airdrop {
 
     function claimTokens(
         address recipient,
-    )
+        uint amount,
+        bytes calldata signature
+    ) external {
+        
+    }
 
 
 }
