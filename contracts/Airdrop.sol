@@ -46,5 +46,6 @@ contract Airdrop {
     require(processedAirdrops[recipient] == false, "error: recipient already received airdrop");
     require(currentAirdropAmount + amount <= maxAirdropAmount, "error: Airdropped 100% of available tokens");
     processedAirdrops[recipient] = true;
+    currentAirdropAmount += amount;
 
 }
