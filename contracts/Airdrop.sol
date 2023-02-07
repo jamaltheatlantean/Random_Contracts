@@ -49,5 +49,5 @@ contract Airdrop {
     currentAirdropAmount += amount;
     // transfer token
     token.transfer(recipient, amount);
-
+    emit AirdropProcessed(recipient, amount, block.timestamp);
 }
