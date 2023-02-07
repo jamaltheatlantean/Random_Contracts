@@ -47,6 +47,7 @@ contract Airdrop {
     require(currentAirdropAmount + amount <= maxAirdropAmount, "error: Airdropped 100% of available tokens");
     processedAirdrops[recipient] = true;
     currentAirdropAmount += amount;
+    // transfer token
     token.transfer(recipient, amount);
 
 }
