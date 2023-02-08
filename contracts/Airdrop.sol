@@ -41,13 +41,15 @@ contract Airdrop {
             recipient,
             amount
         )));
-    }
-    require(recoverSigner(message, signature) == admin, "error: wrong signature");
-    require(processedAirdrops[recipient] == false, "error: recipient already received airdrop");
+        require(recoverSigner(message, signature) == admin, "error: wrong signature");
+        require(processedAirdrops[recipient] == false, "error: recipient already received airdrop");
     require(currentAirdropAmount + amount <= maxAirdropAmount, "error: Airdropped 100% of available tokens");
     processedAirdrops[recipient] = true;
     currentAirdropAmount += amount;
     // transfer token
     token.transfer(recipient, amount);
     emit AirdropProcessed(recipient, amount, block.timestamp);
+    }
+
+    
 }
