@@ -12,7 +12,7 @@ contract Airdrop {
     uint public maxAirdropAmount = 10000 * 10 ** 18; // maximum airdrop amount
 
     // event
-    event AirDropProcessed(
+    event AirdropProcessed(
         address recipient,
         uint amount,
         uint date
@@ -48,7 +48,14 @@ contract Airdrop {
         currentAirdropAmount += amount;
         // transfer token
         token.transfer(recipient, amount);
-        emit AirdropProcessed(recipient, amount, block.timestamp);
+        emit AirdropProcessed (recipient, amount, block.timestamp);
+    }
+
+    function prefixed(bytes32 hash) internal pure returns (bytes32) {
+        return keccak256(abi.encodePacked(
+            "\x19Ethereum Signed Message:\n32",
+            hash
+        ));
     }
 
     
