@@ -58,5 +58,9 @@ contract Airdrop {
         ));
     }
 
+    function splitSignature(bytes memory sig) internal pure returns (uint8, bytes32, by6tes32) {
+        
+    }
+
     
 }
