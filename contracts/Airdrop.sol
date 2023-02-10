@@ -61,7 +61,9 @@ contract Airdrop {
     function splitSignature(bytes memory sig) internal pure returns (uint8, bytes32, by6tes32) {
         require(sig.length == 65);
 
-        
+        bytes32 r;
+        bytes32 s;
+        uint8 v;
     }
 
     
