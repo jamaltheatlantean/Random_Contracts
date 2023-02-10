@@ -67,10 +67,11 @@ contract Airdrop {
 
         assembly {
             // first 32 bytes, after the length prefix
-            r:= mload(add(sig, 32))
+            r := mload(add(sig, 32))
             // second 32 bytes
-            s:= mload(add(sig, 64))
-            
+            s := mload(add(sig, 64))
+            // final byte (first byte of the next 32 bytes)
+            v := byte(0, mload(add(sig, 96)))
         }
     }
 
