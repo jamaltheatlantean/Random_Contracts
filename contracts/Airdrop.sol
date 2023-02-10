@@ -58,7 +58,11 @@ contract Airdrop {
         ));
     }
 
-    function splitSignature(bytes memory sig) internal pure returns (uint8, bytes32, by6tes32) {
+    function recoverSignature(bytes32 message, bytes memory sig) internal pure returns (address) {
+        
+    }
+
+    function splitSignature(bytes memory sig) internal pure returns (uint8, bytes32, bytes32) {
         require(sig.length == 65);
 
         bytes32 r;
